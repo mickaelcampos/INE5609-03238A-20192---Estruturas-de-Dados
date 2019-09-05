@@ -32,7 +32,7 @@ public class ListaDuplamenteEncadeada {
      * excluirPrimeiro
      * excluirUltimo
      * excluirAtual
-     * acessaAtual
+     * acessaAtual 
     */
     
 }
