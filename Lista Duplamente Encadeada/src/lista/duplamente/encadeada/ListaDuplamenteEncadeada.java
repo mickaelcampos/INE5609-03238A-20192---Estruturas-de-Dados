@@ -35,5 +35,7 @@ public class ListaDuplamenteEncadeada {
      * acessaAtual 
     */
     
+    private NodoDuplo inicio, fim;
+    
 }
 
