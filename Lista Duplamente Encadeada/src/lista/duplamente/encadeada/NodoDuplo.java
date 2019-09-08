@@ -20,7 +20,14 @@ public class NodoDuplo {
         this.elemento = elemento;
     }
 
-    public NodoDuplo getProximo() {
+    public NodoDuplo getProximo() throws ProximoNaoExistenteException {
+        try {
+            if (proximo == null) {
+                throw new ProximoNaoExistenteException();
+            }
+        } catch (ProximoNaoExistenteException e) {
+            e.getMessage();
+        }
         return proximo;
     }
 
@@ -28,7 +35,14 @@ public class NodoDuplo {
         this.proximo = proximo;
     }
 
-    public NodoDuplo getAnterior() {
+    public NodoDuplo getAnterior() throws AnteriorNaoExistenteException {
+        try {
+            if (anterior == null) {
+                throw new AnteriorNaoExistenteException();
+            }
+        } catch (AnteriorNaoExistenteException e) {
+            e.getMessage();
+        }
         return anterior;
     }
 

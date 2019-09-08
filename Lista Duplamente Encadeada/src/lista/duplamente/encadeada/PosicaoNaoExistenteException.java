@@ -7,17 +7,12 @@ package lista.duplamente.encadeada;
 
 /**
  *
- * @author 02714395058
+ * @author m1k4
  */
-public class testListaDuplamenteEncadeada {
+public class PosicaoNaoExistenteException extends Exception {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        
-       
+    public PosicaoNaoExistenteException() {
+        super("posicao nao existente");
     }
     
 }

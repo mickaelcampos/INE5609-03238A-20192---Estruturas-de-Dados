@@ -7,8 +7,11 @@ package lista.duplamente.encadeada;
 
 /**
  *
- * @author 02714395058
+ * @author m1k4
  */
-public class Nodo {
+public class AnteriorNaoExistenteException extends Exception {
     
+    public AnteriorNaoExistenteException() {
+        super("Anterior nao existe");
+    }
 }
