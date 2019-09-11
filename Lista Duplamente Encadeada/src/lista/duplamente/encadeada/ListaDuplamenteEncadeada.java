@@ -30,27 +30,27 @@ public class ListaDuplamenteEncadeada {
         this.numElementos++;
     }
     
-    private void avancarKPosicoes(int k) throws ProximoNaoExistenteException {
+    private void avancarKPosicoes(int k) {
         for (int i = 0; i < k-1; i++) {
             this.cursor = this.cursor.getProximo();
         }
     }
     
-    private void retrocederKPosicoes(int k) throws AnteriorNaoExistenteException {
+    private void retrocederKPosicoes(int k) {
         for (int i = 0; i < k-1; i++) {
             this.cursor = this.cursor.getAnterior();
         }
     }
     
-    private void irParaPrimeiro() {
+    private void irParaPrimeiro() { 
         this.cursor = inicio;
     }
     
-    private void irParaUltimo() {
+    private void irParaUltimo() { 
         this.cursor = fim;
     }
     
-    public void inserirNoFim(Object elemento) throws ProximoNaoExistenteException {
+    public void inserirNoFim(Object elemento) throws PosicaoNaoExistenteException {
         NodoDuplo novo = new NodoDuplo(null, null, elemento);
         if (numElementos == 0) {
             this.inicio = novo;
@@ -66,7 +66,7 @@ public class ListaDuplamenteEncadeada {
         }
     }
     
-    public void inserirNaFrete(Object elemento) throws AnteriorNaoExistenteException {
+    public void inserirNaFrete(Object elemento) {
         NodoDuplo novo = new NodoDuplo(null, null, elemento);
         if (this.numElementos == 0) {
             this.inicio = novo;
@@ -83,7 +83,7 @@ public class ListaDuplamenteEncadeada {
         }
     }
     
-    public void inserirAntesDoAtual(Object elemento) throws AnteriorNaoExistenteException {
+    public void inserirAntesDoAtual(Object elemento) throws PosicaoNaoExistenteException {
         NodoDuplo novo = new NodoDuplo(null, null, elemento);
         if (this.numElementos == 0) {
             inserirEmListaVazia(elemento);
@@ -99,7 +99,7 @@ public class ListaDuplamenteEncadeada {
         }
     }
     
-    public void inserirAposAtual(Object elemento) throws ProximoNaoExistenteException {
+    public void inserirAposAtual(Object elemento) throws PosicaoNaoExistenteException {
         NodoDuplo novo = new NodoDuplo(null, null, elemento);
         if (this.numElementos == 0) {
             inserirEmListaVazia(elemento);
@@ -115,8 +115,7 @@ public class ListaDuplamenteEncadeada {
         }
     }
     
-    public void inserirNaPosicao(Object elemento, int pos) throws ProximoNaoExistenteException, 
-            PosicaoNaoExistenteException, AnteriorNaoExistenteException {
+    public void inserirNaPosicao(Object elemento, int pos) throws PosicaoNaoExistenteException {
         try { 
             if (pos > this.numElementos) {
                 throw new PosicaoNaoExistenteException();
@@ -155,12 +154,12 @@ public class ListaDuplamenteEncadeada {
         }
     }
     
-    public void excluirAtual() throws ProximoNaoExistenteException, AnteriorNaoExistenteException {
+    public void excluirAtual() throws PosicaoNaoExistenteException {
         try {
             if (this.cursor == null) {
-                throw new AtualNaoExistenteException();
+                throw new PosicaoNaoExistenteException();
             }
-        } catch(AtualNaoExistenteException e) {
+        } catch(PosicaoNaoExistenteException e) {
             e.getMessage();
         }
         
@@ -170,24 +169,78 @@ public class ListaDuplamenteEncadeada {
             this.fim = null;
             numElementos--;
         }
-        
+
         if (this.cursor == inicio && numElementos > 1) {
-            this.inicio = this.cursor.getProximo(); //
-            avancarKPosicoes(1);
-            this.cursor.setAnterior(null);
-        }
-        
-        if (this.cursor == fim && numElementos > 1) {
-            this.fim = this.cursor.getAnterior();
-            retrocederKPosicoes(1);
+            this.inicio = this.cursor.getProximo();
             this.cursor.setProximo(null);
-        }
-        
-        if (this.cursor != inicio && this.cursor != fim) {
-            this.cursor.getAnterior().setProximo(this.cursor.getProximo());
-            this.cursor.getProximo().setAnterior(this.cursor.getAnterior());
+            this.cursor = inicio;
+            this.cursor.setAnterior(null);
             numElementos--;
         }
-       
+
+        if (this.cursor == fim && numElementos == 1) {
+            this.fim = this.cursor.getAnterior();
+            this.cursor.setAnterior(null);
+            this.cursor = fim;
+            this.inicio = this.cursor;
+            numElementos--;
+        }
+
+        if (this.cursor == fim && numElementos > 1) {
+            this.fim = this.cursor.getAnterior();
+            this.cursor.setAnterior(null);
+            this.cursor = fim;
+            this.cursor.setProximo(null);
+            numElementos--;
+        }
+
+        if (this.cursor != inicio && this.cursor != fim && numElementos > 2) {
+            this.cursor.getAnterior().setProximo(this.cursor.getProximo());
+            this.cursor.getProximo().setAnterior(this.cursor.getAnterior());
+            NodoDuplo temp = this.cursor.getAnterior();
+            this.cursor.setProximo(null);
+            this.cursor.setAnterior(null);
+            this.cursor = temp;
+            temp = null; // test
+            numElementos--;
+        }
+    }
+    
+    public void excluirPrimeiro() throws PosicaoNaoExistenteException {
+        irParaPrimeiro();
+        
+        if (numElementos == 1) {
+            this.cursor = null;
+            this.inicio = null;
+            this.fim = null;
+            numElementos--;
+        }
+        
+        if (numElementos > 1) {
+            this.inicio = this.cursor.getProximo();
+            this.cursor.setProximo(null);
+            this.cursor = inicio;
+            this.cursor.setAnterior(null);
+            numElementos--;
+        }
+    }
+    
+    public void excluirUltimo() {
+        irParaUltimo();
+        
+        if (numElementos == 1) {
+            this.cursor = null;
+            this.inicio = null;
+            this.fim = null;
+            numElementos--;
+        }
+        
+        if (numElementos > 1) {
+            this.fim = this.cursor.getAnterior();
+            this.cursor.setAnterior(null);
+            this.cursor = fim;
+            this.cursor.setProximo(null);
+            numElementos--;
+        }
     }
 }
