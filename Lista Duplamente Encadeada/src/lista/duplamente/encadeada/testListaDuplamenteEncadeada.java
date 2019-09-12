@@ -55,5 +55,7 @@ public class testListaDuplamenteEncadeada {
         lista.excluirUltimo();
         recebeValor = lista.acessarAtual();
         System.out.println(recebeValor); // printa 4
+        
+        
     }
 }
