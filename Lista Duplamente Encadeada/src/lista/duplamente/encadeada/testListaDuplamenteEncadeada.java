@@ -15,36 +15,45 @@ public class testListaDuplamenteEncadeada {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws PosicaoNaoExistenteException {
-        // TODO code application logic here
-//        NodoDuplo nodo = new NodoDuplo(null, null, null);
-//        
-//        NodoDuplo temp = nodo;
-//        
-//        NodoDuplo outrotemp = temp;
-//        
-//        System.out.println(nodo);//@4aa298b7
-//        System.out.println(temp);//@4aa298b7
-//        System.out.println(outrotemp);//@4aa298b7
-//        
-//        temp = null;
-//        
-//        System.out.println("depois");
-//        System.out.println(temp);//null
-//        System.out.println(outrotemp);//@4aa298b7
-//        nodo = null;
-//        System.out.println(nodo);
-//        System.out.println(outrotemp);//null?
-        
-        
+
         ListaDuplamenteEncadeada lista = new ListaDuplamenteEncadeada();
         
+        Integer a = 1;
+        Integer b = 2;
+        Integer c = 3;
+        Integer d = 4;
+        Integer e = 5;
         
-        
-        //lista.inserirNaFrete(lista);
-        lista.excluirAtual();
+        /*Exceptions*/
+        lista.excluirUltimo();
         lista.excluirPrimeiro();
+        lista.excluirAtual();
+        lista.acessarAtual();
         
-       
+        
+        lista.inserirNaFrete(a);
+        Object recebeValor = lista.acessarAtual();
+        System.out.println(recebeValor); // printa 1
+        
+        lista.inserirNaFrete(b);
+        recebeValor = lista.acessarAtual();
+        System.out.println(recebeValor); // printa 2
+        
+        lista.inserirNoFim(c);
+        recebeValor = lista.acessarAtual();
+        System.out.println(recebeValor); // printa 3
+        
+        lista.excluirUltimo();
+        recebeValor = lista.acessarAtual();
+        System.out.println(recebeValor); // printa 2, pois o ultimo foi excluido
+        
+        /*Neste momento recebeValor esta valendo 2*/
+        lista.inserirAntesDoAtual(d);
+        recebeValor = lista.acessarAtual();
+        System.out.println(recebeValor); // printa 4
+        
+        lista.excluirUltimo();
+        recebeValor = lista.acessarAtual();
+        System.out.println(recebeValor); // printa 4
     }
-    
 }

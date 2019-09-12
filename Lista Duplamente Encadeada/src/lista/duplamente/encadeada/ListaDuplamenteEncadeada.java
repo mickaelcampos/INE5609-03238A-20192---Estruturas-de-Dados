@@ -31,13 +31,13 @@ public class ListaDuplamenteEncadeada {
     }
     
     private void avancarKPosicoes(int k) {
-        for (int i = 0; i < k-1; i++) {
+        for (int i = 1; k >= i; i++) {
             this.cursor = this.cursor.getProximo();
         }
     }
     
     private void retrocederKPosicoes(int k) {
-        for (int i = 0; i < k-1; i++) {
+        for (int i = 1; k >= i; i++) {
             this.cursor = this.cursor.getAnterior();
         }
     }
@@ -242,5 +242,38 @@ public class ListaDuplamenteEncadeada {
             this.cursor.setProximo(null);
             numElementos--;
         }
+    }
+    
+    public boolean buscar(Object elemento) {
+        boolean achou = false;
+        if (elemento != null) {
+            
+            NodoDuplo atual = this.cursor;
+            irParaPrimeiro();
+            
+            while (!achou) {
+                if(this.cursor.getElemento().equals(elemento)) {
+                    achou = true;
+                }
+                avancarKPosicoes(1);
+            }
+            
+            this.cursor = atual;
+        }
+        
+        return achou;
+    }
+    
+    public Object acessarAtual()  {
+        try {
+            if (this.cursor != null) {
+                return this.cursor.getElemento();
+            } else {
+                throw new PosicaoNaoExistenteException();
+            }
+        } catch (PosicaoNaoExistenteException e) {
+            e.getMessage();
+        }
+        return null;
     }
 }
