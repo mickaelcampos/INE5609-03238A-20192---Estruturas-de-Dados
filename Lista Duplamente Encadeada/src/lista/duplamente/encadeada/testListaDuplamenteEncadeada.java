@@ -24,37 +24,58 @@ public class testListaDuplamenteEncadeada {
         Integer d = 4;
         Integer e = 5;
         
-        /*Exceptions*/
-        lista.excluirUltimo();
-        lista.excluirPrimeiro();
-        lista.excluirAtual();
-        lista.acessarAtual();
+        /*testando Exceptions*/
+//        lista.excluirUltimo();
+//        lista.excluirPrimeiro();
+//        lista.excluirAtual();
+//        lista.acessarAtual();
         
         
         lista.inserirNaFrete(a);
-        Object recebeValor = lista.acessarAtual();
-        System.out.println(recebeValor); // printa 1
+
+
+        
+        System.out.println(lista.acessarAtual()); // printa 1
         
         lista.inserirNaFrete(b);
-        recebeValor = lista.acessarAtual();
-        System.out.println(recebeValor); // printa 2
+        System.out.println(lista.acessarAtual()); // printa 2
         
         lista.inserirNoFim(c);
-        recebeValor = lista.acessarAtual();
-        System.out.println(recebeValor); // printa 3
+        System.out.println(lista.acessarAtual()); // printa 3
         
         lista.excluirUltimo();
-        recebeValor = lista.acessarAtual();
-        System.out.println(recebeValor); // printa 2, pois o ultimo foi excluido
+        System.out.println(lista.acessarAtual()); // printa 2, pois o ultimo, 3, foi excluido
         
-        /*Neste momento recebeValor esta valendo 2*/
         lista.inserirAntesDoAtual(d);
-        recebeValor = lista.acessarAtual();
-        System.out.println(recebeValor); // printa 4
+        System.out.println(lista.acessarAtual()); // printa 4
         
         lista.excluirUltimo();
-        recebeValor = lista.acessarAtual();
-        System.out.println(recebeValor); // printa 4
+        System.out.println(lista.acessarAtual()); // printa 4
+        
+        lista.inserirAposAtual(e);
+        System.out.println(lista.acessarAtual()); // printa 5
+        
+        lista.inserirNaPosicao(a, 50); // dispara exception
+        System.out.println(lista.acessarAtual()); // printa 5, pois o elemento a nao foi inserido, nao ha posicao 50
+        
+        lista.excluirAtual();
+        System.out.println(lista.acessarAtual()); // printa 4
+        
+        lista.excluirPrimeiro();
+        //System.out.println(lista.buscar(a)); // printa false
+        /*
+        (void) InserirAntesDoAtual testado
+        (void) InserirApósAtual testado
+        (void) inserirNoFim testado
+        (void) inserirNaFrente testado
+        (void) inserirNaPosicao testado
+        (void) ExcluirAtual testado
+        (void) ExcluirPrim
+        (void) ExcluirUlt testado
+        (boolean) Buscar
+        <elemento> acessaAtual
+        */
+        
         
         
     }

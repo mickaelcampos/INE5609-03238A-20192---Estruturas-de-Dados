@@ -119,38 +119,42 @@ public class ListaDuplamenteEncadeada {
         try { 
             if (pos > this.numElementos) {
                 throw new PosicaoNaoExistenteException();
-            } 
+            } else {
+                
+                if(pos == numElementos) {
+                    this.irParaUltimo();
+                } else if (pos <= numElementos) {
+                    this.irParaPrimeiro();
+                    avancarKPosicoes(pos);
+                }
+
+                NodoDuplo novo = new NodoDuplo(null, null, elemento);
+
+                if (numElementos == 0) {
+                    inserirEmListaVazia(elemento);
+                } else if (numElementos == 1) {
+
+                        novo.setProximo(this.cursor.getProximo());
+                        novo.setAnterior(this.cursor.getAnterior());
+                        this.inicio = novo;
+                        this.fim = novo;
+                        this.cursor = novo;
+
+                } else {
+                    novo.setAnterior(this.cursor.getAnterior());
+                    this.cursor.getAnterior().setProximo(novo);
+                    novo.setProximo(this.cursor.getProximo());
+
+                    if (this.cursor.getProximo() != null) {
+                        this.cursor.getProximo().setAnterior(novo);
+                    }
+
+                    this.cursor = novo;
+                    this.numElementos++;
+                }
+            }
         } catch(PosicaoNaoExistenteException e) {
             e.getMessage();
-        }
-        
-        if(pos == numElementos) {
-            this.irParaUltimo();
-        } else {
-            this.irParaPrimeiro();
-            avancarKPosicoes(pos);
-        }
-        
-        NodoDuplo novo = new NodoDuplo(null, null, elemento);
-        
-        if (numElementos == 0) {
-            inserirEmListaVazia(elemento);
-        } else if (numElementos == 1) {
-            
-                novo.setProximo(this.cursor.getProximo());
-                novo.setAnterior(this.cursor.getAnterior());
-                this.inicio = novo;
-                this.fim = novo;
-                this.cursor = novo;
-
-        } else {
-            
-            novo.setAnterior(this.cursor.getAnterior());
-            this.cursor.getAnterior().setProximo(novo);
-            novo.setProximo(this.cursor.getProximo());
-            this.cursor.getProximo().setAnterior(novo);
-            this.cursor = novo;
-            this.numElementos++;
         }
     }
     
@@ -195,19 +199,17 @@ public class ListaDuplamenteEncadeada {
         }
 
         if (this.cursor != inicio && this.cursor != fim && numElementos > 2) {
-            this.cursor.getAnterior().setProximo(this.cursor.getProximo());
             this.cursor.getProximo().setAnterior(this.cursor.getAnterior());
             NodoDuplo temp = this.cursor.getAnterior();
             this.cursor.setProximo(null);
             this.cursor.setAnterior(null);
             this.cursor = temp;
-            temp = null; // test
+            temp = null;
             numElementos--;
         }
     }
     
-    public void excluirPrimeiro() throws PosicaoNaoExistenteException {
-        irParaPrimeiro();
+    public void excluirPrimeiro() throws PosicaoNaoExistenteException {        
         
         if (numElementos == 1) {
             this.cursor = null;
@@ -217,6 +219,11 @@ public class ListaDuplamenteEncadeada {
         }
         
         if (numElementos > 1) {
+            System.out.println(numElementos);
+            System.out.println(this.inicio+"inicio");
+            System.out.println(this.fim+"fim");
+            System.out.println(this.cursor+"cursor");
+            irParaPrimeiro();
             this.inicio = this.cursor.getProximo();
             this.cursor.setProximo(null);
             this.cursor = inicio;
@@ -251,18 +258,29 @@ public class ListaDuplamenteEncadeada {
             NodoDuplo atual = this.cursor;
             irParaPrimeiro();
             
-            while (!achou) {
-                if(this.cursor.getElemento().equals(elemento)) {
-                    achou = true;
-                }
+            if (this.cursor != null) {
+                while (!achou) {
+                    if(this.cursor.getElemento().equals(elemento)) {
+                        achou = true;
+                    }
+                    
                 avancarKPosicoes(1);
+                }
+            this.cursor = atual;
+            
             }
             
-            this.cursor = atual;
         }
         
         return achou;
     }
+    
+    /** Método para acessar o elemento apontado pelo cursor.
+    * O cursor aponta para o ultimo elemento inserido na lista,
+    * caso o elemento apontado seja excluido, o cursor apontará para
+    * o elemento anterior.
+    * @return Object - elemento armazenado dentro da lista
+    */
     
     public Object acessarAtual()  {
         try {
@@ -276,4 +294,5 @@ public class ListaDuplamenteEncadeada {
         }
         return null;
     }
+    
 }
