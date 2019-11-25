@@ -15,7 +15,7 @@ public class LinkedList {
     private Node first, last;
 
     public LinkedList() {
-        this.numElements = 0; // -1 ?
+        this.numElements = 0;
         this.first = null;
         this.last = null;
     }
@@ -53,7 +53,7 @@ public class LinkedList {
     }
     
     private boolean isEmpty() {
-        return (getNumElements() == 0); // -1 ?/
+        return (getNumElements() == 0);
     }
     
     private void insertEmptyList(Node node) {
@@ -84,41 +84,41 @@ public class LinkedList {
         }
     }
     
-    public void remove(Object element) {
+    public void remove(Object element) { // refactor for removeById
         if (!isEmpty()) {
             
             Node cursor = this.getFirst();
-            for (int i = 0; i < this.getNumElements(); i++) {
-                if (cursor.equals(element)) {
-                    
+            for (int i = 0; i < this.getNumElements() - 1; i++) {
+                if (cursor.equals(element)) { // cursor.getElement().equals() 
                     if (cursor.equals(this.getFirst()) && cursor.equals(this.getLast())) { //is first and last and decrementNumElements
                         this.setFirst(null);
                         this.setLast(null);
                         this.decrementNumElements();
                     }
-                    
                     if (cursor.equals(this.getFirst())) { //is first and decrementNumElements
                         this.setFirst(this.getFirst().getNext());
                         this.decrementNumElements();
                     }
-                    
                     if (cursor.equals(this.getLast())) { //is last and decrementNumElements
                         Node newLast = this.getFirst();
-                        for (int j = 0; j < this.getNumElements()-1; j++) { // -2 ?
+                        for (int j = 0; j < this.getNumElements() - 2 ; j++) { 
                             newLast = newLast.getNext();
                         }
                         newLast.setNext(null);
                         this.setLast(newLast);
-                        
                     } 
-                
-                
-                
+                    if (!cursor.equals(this.getFirst()) && !cursor.equals(this.getLast())) { // not is the first and the last and decrementNumElements
+                        Node toRemove = cursor;
+                        cursor = this.getFirst();
+                        for (int k = 0; k < i - 1; k++) {
+                            cursor = cursor.getNext();
+                        }
+                        cursor.setNext(toRemove.getNext());
+                    }
                 } else {
                     cursor = cursor.getNext();
                 }
             }
         }
     }
-    
 }

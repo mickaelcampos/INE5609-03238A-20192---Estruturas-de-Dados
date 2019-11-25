@@ -29,7 +29,8 @@ public class testLinkedList {
         System.out.println(a2.equals(a));
         System.out.println(a);
         System.out.println(a2);
-        
+        System.out.println(0<0);
+                
     }
     
 }
